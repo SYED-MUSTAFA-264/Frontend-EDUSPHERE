@@ -1,0 +1,494 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap');
+
+:root {
+  --bg-deep: #07090e;
+  --bg-card: rgba(15, 18, 26, 0.88);
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-glow: rgba(99, 102, 241, 0.35);
+  --emerald: #10b981;
+  --danger: #ef4444;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+}
+
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* 3D Perspective Ambient Scene */
+.cyber-scene {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px;
+  position: relative;
+  overflow: hidden;
+  perspective: 1200px;
+  background: 
+    radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12), transparent 55%),
+    radial-gradient(circle at 15% 85%, rgba(79, 70, 229, 0.08), transparent 45%),
+    var(--bg-deep);
+}
+
+/* Subtle Architectural 3D Floor Grid */
+.cyber-grid {
+  position: fixed;
+  bottom: -35%;
+  left: -50%;
+  width: 200%;
+  height: 90%;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  transform: rotateX(72deg);
+  mask-image: radial-gradient(ellipse at center, black 10%, transparent 68%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 68%);
+  animation: gridMove 18s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes gridMove {
+  0% { transform: rotateX(72deg) translateY(0); }
+  100% { transform: rotateX(72deg) translateY(56px); }
+}
+
+/* Soft Ambient Lighting Orbs */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(110px);
+  pointer-events: none;
+  z-index: 0;
+  animation: floatOrb 12s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+  top: 8%;
+  left: 18%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.45), rgba(79, 70, 229, 0.1));
+  opacity: 0.35;
+}
+
+.orb-2 {
+  bottom: 8%;
+  right: 18%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(129, 140, 248, 0.35), rgba(59, 130, 246, 0.1));
+  opacity: 0.28;
+  animation-delay: -6s;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(25px, -30px, 40px) scale(1.08); }
+}
+
+/* 3D Tilt Wrapper & Subtle Border Shimmer */
+.card-3d-wrapper {
+  width: 100%;
+  max-width: 490px;
+  position: relative;
+  z-index: 2;
+  transform-style: preserve-3d;
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.card-border-glow {
+  position: relative;
+  border-radius: 20px;
+  padding: 1.5px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+  box-shadow: 
+    0 30px 70px -12px rgba(0, 0, 0, 0.85),
+    0 0 40px -15px rgba(99, 102, 241, 0.25);
+}
+
+.card-border-glow::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    transparent 0deg,
+    transparent 270deg,
+    rgba(99, 102, 241, 0.7) 320deg,
+    rgba(165, 180, 252, 0.9) 360deg
+  );
+  animation: rotateLaser 7s linear infinite;
+  z-index: 0;
+}
+
+@keyframes rotateLaser {
+  100% { transform: rotate(360deg); }
+}
+
+/* Main Obsidian Glass Card */
+.card {
+  position: relative;
+  z-index: 1;
+  background: var(--bg-card);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border-radius: 19px;
+  padding: 30px 32px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Interactive Cursor Spotlight */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    420px circle at var(--mouse-x, 50%) var(--mouse-y, 0%),
+    rgba(99, 102, 241, 0.1),
+    transparent 45%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Top Form Completion Progress Bar */
+.progress-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #818cf8);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.6);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.badge-3d {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  color: #a5b4fc;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.card-header h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.65rem;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.card-header p {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Form Controls */
+.form-group {
+  margin-bottom: 14px;
+  text-align: left;
+  animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+}
+
+.form-group:focus-within label {
+  color: #818cf8;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  color: #64748b;
+  pointer-events: none;
+  transition: color 0.25s ease;
+  z-index: 2;
+}
+
+.form-group:focus-within .input-icon {
+  color: #818cf8;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"] {
+  width: 100%;
+  padding: 11px 14px 11px 38px;
+  background: #141822;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  color: #f8fafc;
+  font-size: 0.86rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+input::placeholder {
+  color: #475569;
+  font-weight: 400;
+}
+
+input:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+input:focus {
+  outline: none;
+  background: #181d2a;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.16);
+}
+
+.input-laser {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #6366f1, #818cf8, transparent);
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+  pointer-events: none;
+}
+
+.form-group:focus-within .input-laser {
+  width: 85%;
+}
+
+.eye-btn {
+  position: absolute;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.eye-btn:hover {
+  background: rgba(99, 102, 241, 0.15);
+  color: #ffffff;
+  border-color: rgba(99, 102, 241, 0.35);
+}
+
+/* Executive Indigo Submit Button */
+.submit-btn {
+  position: relative;
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 22px -4px rgba(99, 102, 241, 0.45);
+  transition: all 0.2s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px -4px rgba(99, 102, 241, 0.6);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Status Alerts */
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  margin-bottom: 16px;
+  animation: alertPop 0.25s ease;
+}
+
+@keyframes alertPop {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.alert.success {
+  background: rgba(16, 185, 129, 0.12);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.alert.error {
+  background: rgba(239, 68, 68, 0.12);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 0.65s infinite linear;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Footer Switch Link */
+.auth-switch-footer {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13.5px;
+}
+
+.auth-switch-link {
+  background: none;
+  border: none;
+  color: #818cf8;
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+  margin-left: 6px;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.auth-switch-link:hover {
+  color: #a5b4fc;
+  text-decoration: underline;
+}
+
+@media (max-width: 520px) {
+  .card {
+    padding: 22px 18px;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
