@@ -102,8 +102,8 @@ function AuthForm() {
     setStatus({ type: '', message: '' })
 
     const endpoint = isLoginView
-      ? 'http://localhost:3000/api/auth/Login'
-      : 'http://localhost:3000/api/auth/Register'
+      ? 'https://backend-edu-git-main-mobi-llm.vercel.app/Login'
+      : 'https://backend-edu-git-main-mobi-llm.vercel.app/Register'
 
     const payload = isLoginView
       ? { StudentEmail: formData.StudentEmail, Password: formData.Password }
